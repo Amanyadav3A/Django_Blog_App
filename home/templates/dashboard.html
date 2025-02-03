@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Dassword{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center text-decoration-underline">{{name.capitalize}}</h1>
+</div>
+
+<div class="container">
+    <a href="{% url 'home:create_post' %}" class="btn btn-success fs-4">Create Your Post</a>
+    <a href="{% url 'home:home' %}" class="btn btn-outline-primary fs-4">Go To Homepage</a>
+    <a href="{% url 'auth_app:logout' %}" class="btn btn-outline-danger fs-4">Logout</a>
+</div>
+
+<hr>
+
+{% if posts %}
+
+{% for post in posts %}
+<div class="container">
+    <h3 class="title text-decoration-underline">{{forloop.counter}}. {{post.0.heading}}</h3>
+    <h5 class="description">{{post.0.desc}}</h5>
+    <h3>By {{post.0.author.username}} at {{post.0.time}}</h3>
+    <div>total likes : {{post.1}}</div>
+    <div class="my-3">
+        {% if post.2 %}
+        comments :<br>
+        {% for data in post.2 %}
+        {{data.username}} : {{data.comments}}
+        <br>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <a href="{% url 'home:update_post' post.0.id %}" class="btn btn-success">update</a>
+    <a href="{% url 'home:delete_post' post.0.id %}" class="btn btn-danger">delete</a>
+    <hr class="mt-5">
+</div>
+{% endfor %}
+
+{% else %}
+<h3>No post available</h3>
+{% endif %}
+
+{% endblock %}

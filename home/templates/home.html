@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center text-decoration-underline mb-5">News For You</h1>
+<div class="container">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'home:dashboard' %}" class="btn btn-success fs-4">Your Profile</a>
+    <a href="{% url 'auth_app:logout' %}" class="btn btn-outline-danger fs-4">logout</a>
+    {% else %}
+    <a href="{% url 'auth_app:login' %}" class="btn btn-success fs-4">Login</a>
+    {% endif %}
+    <a href="{% url 'auth_app:register' %}" class="btn btn-outline-dark fs-4">create new account</a>
+</div>
+
+{% if posts %}
+
+{% for post in posts %}
+<div class="container mt-3">
+    <h3 class="title text-decoration-underline">{{forloop.counter}}. {{post.0.heading}}</h3>
+    <h5 class="description">{{post.0.desc}}</h5>
+    <h3>By {{post.0.author.username}} at {{post.0.time}}</h3>
+    {% if post.1 == 1 %}
+    <a class="btn btn-danger me-3" onclick="add_like(this, '{{ post.0.id }}')">Liked</a>
+    {% else %}
+    <a class="btn btn-outline-danger me-3" onclick="add_like(this, '{{ post.0.id }}')">Like</a>
+    {% endif %}
+    <span class="me-3" id="count-like-{{post.0.id}}">{{ post.0.like }} likes</span>
+    <a class="btn btn-success" onclick="toggle_comment(this, '{{ post.0.id }}')">Comment</a>
+
+    <form data-id="{{ post.0.id }}" class="CommentForm" style="display: none;" onsubmit="submitComment(event, '{{ post.0.id }}','{{ request.user.username }}')" >
+        <div class="mb-3">
+            <input type="text" class="form-control mt-3 comment-input" placeholder="Write a comment..." required>
+            <button type="submit" class="btn btn-primary my-2">Post</button>
+        </div>
+    </form>
+
+    <!-- Container to display comments -->
+    <div class="comment-section" id="comments-{{ post.0.id }}">
+        {% if post.2 %}
+        
+        {% for data in post.2 %}
+        <div style="font-size: 16px;">{{data.u_name}} : {{data.comment}}</div>
+        {% endfor %}
+
+        {% endif %}
+    </div>
+
+    <hr class="mb-5">
+</div>
+{% endfor %}
+
+{% else %}
+<h3>No post available</h3>
+{% endif %}
+{% endblock %}
