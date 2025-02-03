@@ -1,5 +1,5 @@
 
-<h1>Descriptuin :</h1>
+<h1>Description :</h1>
 I developed a Django Blog Application as a comprehensive project to 
 deepen my understanding of Django and Django REST Framework. This 
 web application allows users to create accounts, log in, and log out securely.
