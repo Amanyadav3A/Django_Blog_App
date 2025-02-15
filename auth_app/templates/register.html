@@ -1,33 +1,58 @@
 {% extends 'base.html' %}
 
-{% block title %} Register {% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-sm-6 col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center text-muted mb-4">Register</h2>
 
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <h2 class="text-muted">Register</h2>
-        <form method="POST" action="{% url 'auth_app:register' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="{{form.username.id_for_label}}">Username</label>
-                <input type="text" name="{{form.username.name}}" class="form-control" value="{{form.username.value}}">
-                <span class="text-danger">{{form.username.errors}}</span>
+                <form method="POST" action="{% url 'auth_app:register' %}">
+                    {% csrf_token %}
+
+                    <!-- Username Field -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}"
+                                class="form-control" value="{{ form.username.value|default:'' }}" placeholder="Enter your username">
+                        </div>
+                        <span class="text-danger">{{ form.username.errors }}</span>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-3">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}"
+                                class="form-control" placeholder="Enter your password">
+                        </div>
+                        <span class="text-danger">{{ form.password1.errors }}</span>
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="form-group mb-4">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">Re-Type Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}"
+                                class="form-control" placeholder="Confirm your password">
+                        </div>
+                        <span class="text-danger">{{ form.password2.errors }}</span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg" type="submit">Register</button>
+                        <a href="{% url 'auth_app:login' %}" class="btn btn-outline-secondary btn-lg">Login</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="{{form.password1.id_for_label}}">Password</label>
-                <input type="password" class="form-control" name="{{form.password1.name}}" value="{{form.password1.value}}">
-                <span class="text-danger">{{form.password1.errors}}</span>
-            </div>
-            <div class="form-group">
-                <label for="{{form.password2.id_for_label}}">Re-Type Password</label>
-                <input type="password" name="{{form.password2.name}}" class="form-control" value="{{form.password2.value}}">
-                <span class="text-danger">{{form.password2.errors}}</span>
-            </div>
-            <button class="btn btn-dark" type="submit">submit</button>
-            <a href="{% url 'auth_app:login' %}" class="btn btn-outline-dark">Login</a>
-        </form>
+        </div>
     </div>
 </div>
-
 {% endblock %}
