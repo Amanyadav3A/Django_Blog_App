@@ -127,6 +127,8 @@ USE_TZ = True
 
 # URL to serve static files in development
 STATIC_URL = '/static/'
+# If using WhiteNoise to serve static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Additional directories where static files can be found (only for development)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Add your project-level static folder here
