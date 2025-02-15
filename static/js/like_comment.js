@@ -28,7 +28,7 @@ function add_like(button, postId) {
     let likecount = document.getElementById('count-like-' + postId);
     let currentlikes = parseInt(likecount.innerText);
     let id = parseInt(postId);
-    let url = `https://blog.onrender.com/post_api/${id}/`;
+    let url = `https://blog-udis.onrender.com/post_api/${id}/`;
 
     // If the button already has 'Liked', it means the user is unliking the post
     if (button.classList.contains("btn-danger")) {
@@ -84,7 +84,7 @@ function submitComment(event, postId, username) {
     if (commentText === "") return; // Ignore empty comments
 
     let id = parseInt(postId);
-    let URL = `https://blog.onrender.com/comment_api/${id}/`;
+    let URL = `https://blog-udis.onrender.com/comment_api/${id}/`;
 
     // Send the comment to the server
     comment_operation(URL, commentText).then(response => {
