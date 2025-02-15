@@ -3,38 +3,48 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <h2 class="text-muted">Login</h2>
+<div class="row justify-content-center mt-5">
+    <div class="col-sm-6 col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center text-muted mb-4">Login</h2>
 
-        {% if form.non_field_errors %}
-        <div class="alert alert-danger">
-            {{ form.non_field_errors }}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <form action="{% url 'auth_app:login' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}"
+                                class="form-control" value="{{ form.username.value|default:'' }}" placeholder="Enter your username">
+                        </div>
+                        <span class="text-danger">{{ form.username.errors }}</span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}"
+                                class="form-control" placeholder="Enter your password">
+                        </div>
+                        <span class="text-danger">{{ form.password.errors }}</span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg" type="submit">Login</button>
+                        <a href="{% url 'auth_app:register' %}" class="btn btn-outline-secondary btn-lg">Create your account</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        {% endif %}
-
-        <form action="{% url 'auth_app:login' %}" method="POST">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="{{ form.username.id_for_label }}">Username</label>
-                <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}"
-                    class="form-control" value="{{ form.username.value|default:'' }}">
-                <span class="text-danger">{{ form.username.errors }}</span>
-            </div>
-
-            <div class="form-group mt-3">
-                <label for="{{ form.password.id_for_label }}">Password</label>
-                <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}"
-                    class="form-control">
-                <span class="text-danger">{{ form.password.errors }}</span>
-            </div>
-
-            <div class="mt-4">
-                <button class="btn btn-dark" type="submit">Login</button>
-                <a href="{% url 'auth_app:register' %}" class="btn btn-outline-dark">Create your account</a>
-            </div>
-        </form>
     </div>
 </div>
 {% endblock %}
