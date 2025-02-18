@@ -11,7 +11,7 @@ from .serializers import post_serializer
 
 
 # Creating views .
-
+@login_required
 def home_view(request):
     isLike = []
     comment = []
